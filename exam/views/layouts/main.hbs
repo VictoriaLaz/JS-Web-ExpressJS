@@ -1,35 +1,39 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
-    <title>My Demo Server</title>
+    <title>Doner Place</title>
     <link href="/css/site.css" type="text/css" rel="stylesheet">
 </head>
-
 <body>
     <div class="container">
         <header>
+            <span class="logo">Doner  Place</span>
+            {{#if currentUser}}
+            <span class="greeting">Welcome, {{currentUser.username}} | <a href="/logout">[logout]</a></span>
+            {{/if}}
             <ul class="menu">
-                <li><a href="/">Home</a></li>
-                <li><a href="/about">About</a></li>
+				<li><a class="button" href="/">Home</a></li>
                 {{#if currentUser}}
-                <li>{{currentUser.username}}</li>
-                <li>
-                    <form id="logout-form" action="/logout" method="post"></form>
-                    <a href="javascript:document.getElementById('logout-form').submit()">Logout</a>
-                </li>
+                <li><a class="button" href="/order-status">My Orders</a></li>
+                {{#if currentUser.isAdmin}}
+				<li><a class="button" href="/all-orders">All Orders</a></li>
+				<li><a class="button" href="/create-product">Create Product</a></li>
+                {{/if}}
                 {{else}}
-                <li><a href="/login">Login</a></li>
-                <li><a href="/register">Register</a></li>
+                <li><a class="button" href="/login">Login</a></li>
+                <li><a class="button" href="/register">Register</a></li>
                 {{/if}}
             </ul>
         </header>
         <main>
+            {{#if successMessage}}
+            <span>{{successMessage}}</span> {{/if}} 
             {{#if globalError}}
-            <span>{{globalError}}</span> {{/if}} {{{body}}}
+            <span>{{globalError}}</span> {{/if}} 
+            {{{body}}}
         </main>
+        <footer>Doner Place &copy; 2017</footer>
     </div>
 </body>
-
 </html>
